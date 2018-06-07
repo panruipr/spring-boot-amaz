@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		
+		<link rel="stylesheet" href="../static/bootstrap/css/bootstrap.css" />
+		<link rel="stylesheet" href="../static/bootstrapValidator/css/bootstrapValidator.min.css" />
+		<link rel="stylesheet" href="../static/bootstrap/css/bootstrap-theme.min.css" />
+		
+		<script type="text/javascript" src="../static/jquery/jquery-3.3.1.min.js" ></script>
+		<script type="text/javascript" src="../static/bootstrap/js/bootstrap.min.js" ></script>
+		<script type="text/javascript" src="../static/bootstrapValidator/js/bootstrapValidator.min.js" ></script>
+
+		<title>后台管理系统</title>
+	</head>
+	
+	<body>
+		<div class="container">
+			
+			<div class="modal show center-block" id="loginModal">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h1>后台管理系统</h1>
+						</div>
+						
+						<div class="modal-body">
+							
+							<form class="" id="loginForm" role="form" method="post" novalidate="novalidate">
+				<div>
+					<p class="f-18 text-center">用户登录</p>
+				</div>
+				
+				<div class="form-group mt20">
+					<div class="input-group">
+						<div class="input-group-addon">
+							<i class="glyphicon glyphicon-user"></i>
+						</div>
+						<input type="text" id="username" name="username" class="form-control" placeholder="请输入用户名" value="" autocomplete="off" data-bv-field="username">
+					</div>
+					<span id="userErrorMessage" class="help-block lastNameMessage f-red"></span>
+				</div>
+				
+				<div class="form-group mt20">
+					<div class="input-group">
+						<div class="input-group-addon">
+							<i class="glyphicon glyphicon-lock"></i>
+						</div>
+						<input type="password" id="password" name="password" class="form-control" placeholder="请输入密码" value="" autocomplete="off" onfocus="$(this).attr('type','password');" data-bv-field="password">
+					</div>
+					<span id="passErrorMessage" class="help-block lastNameMessage f-red"></span>
+				</div>
+				
+				<div class="form-group mt20">
+					<div class="input-group">
+						<input type="text" maxlength="4" class="form-control" id="CHECK_CODE" name="CHECK_CODE" placeholder="请输入验证码" data-bv-field="CHECK_CODE">
+						<div class="input-group-addon">
+							<img height="20" width="90" id="kaptchaImage" src="ClinicCountManager/captcha-image.action">
+						</div>
+					</div>
+					<span id="errorMessage" class="help-block lastNameMessage f-red"></span>
+				</div>
+				
+				<div class="form-group mt10">
+					<div class="checkbox">
+						<label>
+						 	<input type="checkbox" id="remeberMe" name="remeberMe"> 记住密码
+						 </label> 
+						<a class="pull-right inline" id="serchPassword" href="#">忘记登录密码?</a>
+					</div>
+				</div>
+				
+				<div class="form-group center-block">
+					<button type="submit" id="loginBtn" class="mt20 btn btn-info" data-loading-text="正在登录...">立即登录</button>
+					<button id="registBtn" class="mt20 btn btn-primary">立即注册</button>
+				</div>
+				
+				<input type="hidden" value=""></form>
+				
+					</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<script>
+		
+		
+        $(function(){           
+            $('#kaptchaImage').click(function () {
+             	$(this).hide().attr('src', 'ClinicCountManager/captcha-image.action?' + Math.floor(Math.random()*100) ).fadeIn(); 
+            });
+            if($.cookie("rmbUser") == "true") {
+                $("#remeberMe").prop("checked", true);
+                $("#username").val($.cookie("userNameCookie"));
+                $("#password").val($.cookie("passwordCookie"));
+            }else{
+            	$("#remeberMe").prop("checked", false);
+                $("#username").val("");
+                $("#password").val("");
+            }
+            
+            var w=1920,h=700,W=$('.carousel').width();
+	        $('.carousel-inner img').width(W);
+	        $('.carousel-inner img').height(h*W/w);
+        });   
+    	$("#regwindows").on("click", function(){
+    		window.document.location.href="reg.html";
+    	});
+    	$("#serchPassword").on("click", function(){
+    		window.document.location.href="serchPassword.html";
+    	});
+        $(document).ready(function() {
+        	$('#loginForm').bootstrapValidator({
+                message: 'This value is not valid',
+                live:"submitted",
+                 feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                	username: {
+                		 container: '#userErrorMessage',
+                         validators: {
+                             notEmpty: {
+                                 message: '请输入用户名'
+                             }
+                         }
+                    },
+                    password: {
+                    	container: '#passErrorMessage',
+                        validators: {
+                        	notEmpty: {
+                                message: '请输入密码'
+                            }
+                        }
+                    },
+                    CHECK_CODE:{
+                    	container: '#errorMessage',
+                    	validators: {
+                        	notEmpty: {
+                                message: '请输入验证码'
+                            }
+                        }
+                    }
+                },
+                submitHandler: function(validator, form, submitButton) {
+                	$("#loginBtn").button('loading');
+            		Qdone.jsonDataRequest({
+    					url:'data/userLogin.action',
+    					params:{
+    						ACTION_NAME:'USER_LOGIN',
+    						username:$("#username").val(),
+    						password:$("#password").val(),
+    						CHECK_CODE:$("#CHECK_CODE").val()
+    					},
+    					method:'POST',
+    					sCallback:function(json){
+    						
+    						if(json.RESCODE=="000000"){
+    							if ($("#remeberMe").prop("checked")) {
+    					            var str_username = $("#username").val();
+    					            var str_password = $("#password").val();
+    					            $.cookie("rmbUser", "true", { expires: 7 }); //存储一个带7天期限的cookie
+    					            $.cookie("userNameCookie", str_username, { expires: 7 });
+    					            $.cookie("passwordCookie", str_password, { expires: 7 });
+    					        }else {
+    					            $.cookie("rmbUser", "false", { expire: -1 });
+    					            $.cookie("userNameCookie", "", { expires: -1 });
+    					            $.cookie("passwordCookie", "", { expires: -1 });
+    					        }
+    							window.document.location.href="home.html";
+    						}else{
+    							$("#errorMessage").html(json.MESSAGE);
+    							$("#kaptchaImage").attr('src', 'ClinicCountManager/captcha-image.action?' + Math.floor(Math.random()*100) )
+    							$("#loginBtn").button('reset');
+    							$(form).bootstrapValidator('disableSubmitButtons', false);
+    						}
+    					},
+    					eCallback:function(XMLHttpRequest, textStatus, errorThrown){
+    						$("#loginBtn").button('reset')
+    					}
+    				});
+                }
+            });
+        } );
+		</script>
+	</body>
+</html>
