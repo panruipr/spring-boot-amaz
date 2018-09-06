@@ -6,18 +6,67 @@
 		<link rel="stylesheet" href="../static/bootstrap/css/bootstrap.css" />
 		<link rel="stylesheet" href="../static/bootstrapValidator/css/bootstrapValidator.min.css" />
 		<link rel="stylesheet" href="../static/bootstrap/css/bootstrap-theme.min.css" />
-		
+		<link rel="stylesheet" href="../static/Tangents/style.css" />
+		<link rel="stylesheet" href="../static/jquery-circle-menu/style.css"/>
 		<script type="text/javascript" src="../static/jquery/jquery-3.3.1.min.js" ></script>
 		<script type="text/javascript" src="../static/bootstrap/js/bootstrap.min.js" ></script>
 		<script type="text/javascript" src="../static/bootstrapValidator/js/bootstrapValidator.min.js" ></script>
-
+		<script type="text/javascript" src="../static/jquery-circle-menu/index.js"></script>		
+		<script type="text/javascript" src="../static/CanvasParticles/canvas-particle.js"></script>
 		<title>后台管理系统</title>
+		<style>
+			body{background-color: white}
+		</style>
 	</head>
 	
-	<body>
+	<body id="mydiv">
+		<script src='http://s3.amazonaws.com/toxiclibsjs/toxiclibsjs/build/toxiclibs.min.js'></script>
+	  	<script src='http://s3.amazonaws.com/animitter/0.5/animitter.min.js'></script>
+	  	<script type="text/javascript" src="../static/jquery-circle-menu/index.js"></script>
+	  	<script src="../static/Tangents/index.js"></script>
 		<div class="container">
 			
+			
 			<div class="modal show center-block" id="loginModal">
+				<div class='selector'>
+			  <ul>
+			    <li>
+			      <input id='1' type='checkbox'>
+			      <label for='1'>贝塞尔</label>
+			    </li>
+			    <li>
+			      <input id='2' type='checkbox'>
+			      <label for='2'>粒子</label>
+			    </li>
+			    <li>
+			      <input id='3' type='checkbox'>
+			      <label for='3'>Option 3</label>
+			    </li>
+			    <li>
+			      <input id='4' type='checkbox'>
+			      <label for='4'>Option 4</label>
+			    </li>
+			    <li>
+			      <input id='5' type='checkbox'>
+			      <label for='5'>Option 5</label>
+			    </li>
+			    <li>
+			      <input id='6' type='checkbox'>
+			      <label for='6'>Option 6</label>
+			    </li>
+			    <li>
+			      <input id='7' type='checkbox'>
+			      <label for='7'>Option 7</label>
+			    </li>
+			    <li>
+			      <input id='8' type='checkbox'>
+			      <label for='8'>Option 8</label>
+			    </li>
+			  </ul>
+			  <button>主题</button>
+			</div>
+			
+				
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<div class="modal-header">
@@ -86,11 +135,63 @@
 		<script>
 		
 		
+		function setTheme(type){
+			console.log(type);
+			$("#mydiv").find('canvas').remove();
+			if("贝塞尔" == type){
+				$("#mydiv").css("background-color","white")
+				/*main = function(){*/
+				    document.body.appendChild(sketch.el);
+				    document.body.appendChild(aboutPanel.el);
+				
+				/*    document.body.querySelector('.btn.randomize').addEventListener('click', app.randomize);*/
+				    /*window.addEventListener('resize', app.reset);*/
+				
+				    //transition in info panel
+				     
+				    setTimeout(function(){
+				       aboutPanel.loop.start();
+				    }, 6000);
+				    
+				    setTimeout(function(){
+				       sketch.loop.stop();
+				    }, 30000)
+				    
+				           
+				    app.reset();
+				/*};
+				window.onload = main;*/
+			}else if(type=="粒子"){
+				
+				$("#mydiv").css("background-color","#2D2D2D");
+				/*main1 = function() {*/
+		    		//配置
+				    var config = {
+				        vx: 4,	//小球x轴速度,正为右，负为左
+				        vy: 4,	//小球y轴速度
+				        height: 1,	//小球高宽，其实为正方形，所以不宜太大
+				        width: 1,
+				        count: 200,		//点个数
+				        color: "121, 162, 185", 	//点颜色
+				        stroke: "0,255,255", 		//线条颜色
+				        dist: 000, 	//点吸附距离
+				        e_dist: 20000, 	//鼠标吸附加速距离
+				        max_conn: 10 	//点到点最大连接数
+				    }
+				    //调用
+				    	CanvasParticle(config);
+				    
+				/*}*/
+				
+				//window.onload = main1;
+			}
+		}
+		
         $(function(){           
             $('#kaptchaImage').click(function () {
              	$(this).hide().attr('src', 'ClinicCountManager/captcha-image.action?' + Math.floor(Math.random()*100) ).fadeIn(); 
             });
-            if($.cookie("rmbUser") == "true") {
+            /*if($.cookie("rmbUser") == "true") {
                 $("#remeberMe").prop("checked", true);
                 $("#username").val($.cookie("userNameCookie"));
                 $("#password").val($.cookie("passwordCookie"));
@@ -98,12 +199,13 @@
             	$("#remeberMe").prop("checked", false);
                 $("#username").val("");
                 $("#password").val("");
-            }
+            }*/
             
             var w=1920,h=700,W=$('.carousel').width();
 	        $('.carousel-inner img').width(W);
 	        $('.carousel-inner img').height(h*W/w);
         });   
+        
     	$("#regwindows").on("click", function(){
     		window.document.location.href="reg.html";
     	});
@@ -159,7 +261,7 @@
     					sCallback:function(json){
     						
     						if(json.RESCODE=="000000"){
-    							if ($("#remeberMe").prop("checked")) {
+    							/*if ($("#remeberMe").prop("checked")) {
     					            var str_username = $("#username").val();
     					            var str_password = $("#password").val();
     					            $.cookie("rmbUser", "true", { expires: 7 }); //存储一个带7天期限的cookie
@@ -169,7 +271,7 @@
     					            $.cookie("rmbUser", "false", { expire: -1 });
     					            $.cookie("userNameCookie", "", { expires: -1 });
     					            $.cookie("passwordCookie", "", { expires: -1 });
-    					        }
+    					        }*/
     							window.document.location.href="home.html";
     						}else{
     							$("#errorMessage").html(json.MESSAGE);
@@ -185,6 +287,48 @@
                 }
             });
         } );
+        
+        var angleStart = -360;
+
+// jquery rotate animation
+function rotate(li,d) {
+    $({d:angleStart}).animate({d:d}, {
+        step: function(now) {
+            $(li)
+               .css({ transform: 'rotate('+now+'deg)' })
+               .find('label')
+                  .css({ transform: 'rotate('+(-now)+'deg)' });
+        }, duration: 0
+    });
+}
+
+// show / hide the options
+function toggleOptions(s) {
+    $(s).toggleClass('open');
+    var li = $(s).find('li');
+    var deg = $(s).hasClass('half') ? 180/(li.length-1) : 360/li.length;
+    for(var i=0; i<li.length; i++) {
+        var d = $(s).hasClass('half') ? (i*deg)-90 : i*deg;
+        $(s).hasClass('open') ? rotate(li[i],d) : rotate(li[i],angleStart);
+    }
+}
+
+$('.selector button').on('click',function(e) {
+    toggleOptions($(this).parent());
+});
+
+$('.selector label').on('click',function(){
+	$(this).parents('.selector').find('label').css('background-color','#5cb85c');
+	$(this).css('background-color','#428bca');
+	setTheme($(this).text());
+})
+
+setTimeout(function() { toggleOptions('.selector');
+	var $lable = $(".selector label");
+	if($lable.length>0){
+		$($lable[0].click());		
+	}
+}, 100);
 		</script>
 	</body>
 </html>

@@ -6,7 +6,7 @@
 	<groupId>com.pr.Amaz</groupId>
 	<artifactId>amaz</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
 	<name>Amaz</name>
 	<description>Demo project for Spring Boot</description>
@@ -60,7 +60,6 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-
 	<build>
 <!--
 		<defaultGoal>compile</defaultGoal>

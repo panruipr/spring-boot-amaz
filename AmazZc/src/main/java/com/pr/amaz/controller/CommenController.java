@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class CommenController {
 
     @ResponseBody
-    @RequestMapping(value = "hello",method = RequestMethod.GET)
+    @RequestMapping(value = "hello",method = RequestMethod.GET) 
     public String test(){
         System.out.println("进入到测试方法");
         return "Hello World";
