@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<link rel="stylesheet" href="../static/codeMirror/codemirror.css" />
+	<script type="text/javascript" src="../static/codeMirror/codemirror.js"></script>
+	<body>
+		<textarea id="test"></textarea>
+	</body>
+	<script>
+		var editor = CodeMirror.fromTextArea(document.getElementById("test"), {
+			  //mode: "application/xml",
+			  styleActiveLine: true,
+			  lineNumbers: true,
+			  lineWrapping: true
+			});
+	</script>
+</html>
