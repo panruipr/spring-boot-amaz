@@ -10,10 +10,10 @@ spring:
     #数据源配置
   datasource:
     name: business
-    url: jdbc:mysql//193.112.249.196:3306/business
-    username: panrui
-    password: PanRui1993!
-    type: com.alibaba.druid.pool.Driver
+    url: jdbc:mysql//xxx.xx.xx.xx:3306/business
+    username: username
+    password: password
+    type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.jdbc.Driver
 #mybtis相关配置
 mybatis:
