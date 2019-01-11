@@ -7,17 +7,34 @@ spring:
       prefix: classpath:/templates/
       suffix: .html
     static-path-pattern: /static/**
-    #数据源配置
+      #数据源配置
   datasource:
-    name: business
-    url: jdbc:mysql//xxx.xx.xx.xx:3306/business
-    username: username
-    password: password
     type: com.alibaba.druid.pool.DruidDataSource
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    druid:
+      #数据源idrep配置
+      idrep:
+        name: KFDB1
+        url: jdbc:oracle:thin:@172.22.32.5:1521:KFDB1
+        username: idrep
+        password: idrep
+      #数据源ircp配置
+      ircp:
+        name: kfdb1
+        url: jdbc:oracle:thin:@172.22.32.5:1521:kfdb1
+        username: ircp
+        password: ircp
+      #数据源eos75配置
+      eos75:
+        name: bgrac
+        url: jdbc:oracle:thin:@//172.18.230.43:1521/bgrac
+        username: eos75
+        password: quality_123
+
 #mybtis相关配置
 mybatis:
   mapper-locations: classpath:/mapping/*.xml
   type-aliases-package: com/pr/amaz/dao
 #分页插件的配置
+
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
