@@ -15,21 +15,21 @@ spring:
       #数据源idrep配置
       idrep:
         name: KFDB1
-        url: jdbc:oracle:thin:@172.22.32.5:1521:KFDB1
-        username: idrep
-        password: idrep
+        url: jdbc:oracle:thin:@xxx.xx.xx.x:1521:xxxx
+        username: xxxx
+        password: xxxx
       #数据源ircp配置
       ircp:
         name: kfdb1
-        url: jdbc:oracle:thin:@172.22.32.5:1521:kfdb1
-        username: ircp
-        password: ircp
+        url: jdbc:oracle:thin:@xxx.xx.xx.x:1521:xxxx
+        username: xxxx
+        password: xxxx
       #数据源eos75配置
       eos75:
         name: bgrac
-        url: jdbc:oracle:thin:@//172.18.230.43:1521/bgrac
-        username: eos75
-        password: quality_123
+        url: jdbc:oracle:thin:@xxx.xx.xx.x:1521:xxxx
+        username: xxxx
+        password: xxxx
 
 #mybtis相关配置
 mybatis:
