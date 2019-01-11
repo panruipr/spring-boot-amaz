@@ -11,7 +11,8 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
 
     /**
      * 用来保存数据源和获取数据源
-     * ThreadLocal用来管理多线程，来保证线程的安全，互不干扰。ThreadLocal会在并发编程的时候为每一个线程创建一个副本
+     * ThreadLocal用来管理多线程，来保证线程的安全，互不干扰。
+     * ThreadLocal会在并发编程的时候为每一个线程创建一个副本
      * 虽然共用同一个变量，但每一个线程都会得到相同的初始值。
      */
     private static final ThreadLocal<String> contextHolder = new ThreadLocal<String>();
