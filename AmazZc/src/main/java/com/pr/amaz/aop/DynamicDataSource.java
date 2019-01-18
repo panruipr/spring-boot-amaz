@@ -1,10 +1,13 @@
 package com.pr.amaz.aop;
 
+
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 
 import javax.sql.DataSource;
+import java.sql.SQLFeatureNotSupportedException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 public class DynamicDataSource extends AbstractRoutingDataSource {
 
@@ -50,4 +53,8 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
         contextHolder.remove();
     }
 
+    @Override
+    public Logger getParentLogger() {
+        return super.getParentLogger();
+    }
 }
