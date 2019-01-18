@@ -19,6 +19,7 @@ public class DynamicDataSourceConfig {
     private Logger logger =  LoggerFactory.getLogger(DynamicDataSource.class);
 
     @Bean
+    @Primary
     @ConfigurationProperties("spring.datasource.druid.idrep")
     public DataSource idrepDataSource(){
         return DataSourceBuilder.create().type(com.alibaba.druid.pool.DruidDataSource.class).build();
@@ -37,7 +38,6 @@ public class DynamicDataSourceConfig {
     }
 
     @Bean
-    @Primary
     public DynamicDataSource dataSource(DataSource idrepDataSource,DataSource ircpDataSource,DataSource eos75DataSource){
         logger.info("加载DynamicDataSourceConfig中的Primary注解方法添加数据源集合");
         Map<String, DataSource> targetDataSource = new HashMap<String, DataSource>();
