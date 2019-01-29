@@ -1,5 +1,7 @@
-package com.pr.amaz.aop;
+package com.pr.amaz.config;
 
+import com.pr.amaz.aop.DataSourceNames;
+import com.pr.amaz.aop.DynamicDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -12,7 +14,12 @@ import javax.sql.DataSource;
 import java.util.HashMap;
 import java.util.Map;
 
-
+/**
+ * 将数据源交给spring-bean管理
+ * @Primary 优先使用idrep数据源，不能将@Primary注解到最后一个方法datasource方法上否则会产生依赖注入
+ * com.alibaba.druid.pool.DruidDataSource.class 指定数据源类型，这里主要是防止配置文件找不到如果能找到直接使用
+ * DataSourceBuilder.create().build()
+ */
 @Configuration
 public class DynamicDataSourceConfig {
 
