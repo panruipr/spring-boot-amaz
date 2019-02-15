@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+</html>
+
+<!DOCTYPE html>
+<%@page pageEncoding="UTF-8"%>
+<% String contextPath = request.getContextPath(); %>
+<%@ page import="java.util.Date" %>
+<%@page import="java.util.Date"%>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="<%=contextPath %>/css/common.css" />
+    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/queryStyleEnd.css" />
+    <link rel="stylesheet" type="text/css" href="<%=contextPath %>/css/queryStyle.css" />
+    <link rel="stylesheet" type="text/css" href="<%=contextPath %>/css/cloud-admin.css" >
+    <%-- <link href="<%=contextPath %>/frontend_theme/font-aweseom4.6.3/css/font-awesome.min.css" rel="stylesheet"> --%>
+    <link rel="stylesheet" type="text/css" href="<%=contextPath %>/css/popoverwin.css" />
+    <link href="<%=contextPath%>/css/rccommon.css" rel="stylesheet">
+    <%-- <link href="<%=contextPath %>/font-awesome/css/font-awesome.min.css" rel="stylesheet"> --%>
+    <link href="<%=contextPath %>/frontend_theme/Font-Awesome-master-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="<%=contextPath %>/handsontable/handsontable-orgin.css" rel="stylesheet">
+    <!-- gridly 部分 -->
+    <link href="<%=contextPath %>/report/index/css/jquery.gridly.css" rel="stylesheet">
+    <!-- 标签样式 -->
+    <link href="<%=contextPath %>/report/index/css/color-sticker.css" rel="stylesheet" type="text/css">
+    <!-- 主题换色样式 -->
+    <link href="<%=contextPath %>/report/index/css/colorStyle.css" rel="stylesheet" type="text/css">
+    <link href="<%=contextPath %>/css/perfect-scrollbar.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="<%=contextPath %>/css/jquery-ui-1.12.1.custom/jquery-ui.min.css" />
+    <!-- 查询下拉框 -->
+    <link rel="stylesheet" type="text/css" href="<%=contextPath %>/tools/jsp/components/selectChoose/selectChoose.css" />
+    <link rel="stylesheet" type="text/css" href="<%=contextPath %>/js/bootstrap-select/bootstrap-select.min.css" >
+    <link rel="stylesheet" type="text/css" href="<%=contextPath %>/report/index/css/serviceCommon.css?v=<%=new Date().getTime() %>" >
+    <link rel="stylesheet" type="text/css" href="<%=contextPath %>/report/index/css/portArea.css" >
+    <link rel="stylesheet" type="text/css" href="<%=contextPath %>/report/index/css/phcommon.css?v=<%=new Date().getTime() %>">
+    <link rel="stylesheet" type="text/css" href="<%=contextPath %>/js/fullcalendar/fullcalendar.min.css" />
+
+    <%-- <script src="https://cdn.bootcss.com/vue/2.5.16/vue.js"></script> --%>
+    <script src="<%=contextPath%>/js/vue.js"></script>
+    <!-- <script src="https://cdn.bootcss.com/vue/2.5.16/vue.js"></script> -->
+    <script type="text/javascript" src="<%=contextPath %>/echarts/echarts.min.js"></script>
+    <script src="<%=contextPath %>/js/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="<%=contextPath %>/js/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+    <!-- <script src='https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js'></script> -->
+    <script src="<%=contextPath%>/report/index/js/jquery.gridly.js?v=<%=new Date().getTime() %>"></script>
+    <script type="text/javascript" src="<%=contextPath %>/handsontable/handsontable-min.js"></script>
+    <script type="text/javascript" src="<%=contextPath %>/js/commonjs.js"></script>
+    <script src="<%=contextPath %>/json/pluginJson.js"></script>
+    <script src="<%=contextPath %>/bootstrap-dist/js/bootstrap.min.js"></script>
+    <!-- gridly 部分 -->
+    <!-- 标签js -->
+    <script src="<%=contextPath%>/report/index/js/jquery.dragsort.js"></script>
+    <script src="<%=contextPath%>/report/index/js/colorsticker.js" type="text/javascript"></script>
+    <!--  -->
+    <script src="<%=request.getContextPath() %>/js/perfect-scrollbar.min.js"></script>
+    <!-- 时间插件 -->
+    <script type="text/javascript" src="<%=contextPath %>/js/laydate/laydate.js"></script>
+    <script type="text/javascript" src="<%=contextPath %>/js/util/myValid.js"></script>
+    <!-- 查询下拉框 -->
+    <script type="text/javascript" src="<%=contextPath %>/tools/jsp/components/selectChoose/selectChoose.js"></script>
+    <!-- 联想下拉框 -->
+    <script type="text/javascript" src="<%=request.getContextPath()%>/js/bootstrap-select/bootstrap-select.min.js"></script>
+    <!-- d3.js -->
+    <script src="<%=request.getContextPath() %>/d3tree/d3.js"></script>
+    <!-- 脑图部分的js -->
+    <script src="<%=request.getContextPath() %>/report/index/js/BuildConfJson1.js"></script>
+    <script src="<%=request.getContextPath() %>/js/messengerjs/messenger.js"></script>
+    <script src="<%=request.getContextPath() %>/report/index/js/draggable.js"></script>
+    <script src="<%=request.getContextPath() %>/pageoffice.js" id="po_js_main"></script>
+    <script src="<%=contextPath %>/ckeditor/ckeditor.js"></script>
+
+    <!-- 添加SQL编辑代码高亮样式 -->
+    <link rel="stylesheet" href="<%=contextPath %>/report/index/css/codemirror.css">
+    <link rel="stylesheet" href="<%=contextPath %>/report/index/css/dracula.css">
+
+    <!-- SQL代码高亮JS -->
+    <script type="application/javascript" src="<%=contextPath %>/report/index/js/codemirror.js"></script>
+    <script type="application/javascript" src="<%=contextPath %>/report/index/js/sql.js"></script>
+    <!-- 自动刷新SQL编辑框 -->
+    <script type="application/javascript" src="<%=contextPath %>/report/index/js/autorefresh.js"></script>
+    <!-- json处理包 -->
+    <%-- <script src="<%=request.getContextPath() %>/report/index/js/json2.js"></script> --%>
+
+    <script type="text/javascript" src="<%=contextPath %>/js/fullcalendar/fullcalendar.min.js"></script>
+    <script type="text/javascript" src="<%=contextPath %>/js/fullcalendar/gcal.js"></script>
+    <style>
+        .addbox{
+            position: absolute;
+            background-color: #0072c6;
+            z-index: 9;
+            left: 1356px;
+            top: 521px;
+        }
+    </style>
+</head>
+<body color-series="traditional" style="overflow-x: auto;">
+<%@include file="/tools/jsp/components/combobox.jsp"%>
+<%@include file="/tools/jsp/components/tipBox.jsp" %>
+
+<!-- 重新布局确认框 -->
+<div id="addBox" class="addbox" style="display:none">
+    <div style="height: 8%;"><i class="fa fa-times" aria-hidden="true" style="float: right;padding: 2%;color: #fff;"></i></div>
+    <div style="padding: 2%;height: 92%;"><textarea style="width: 100%;height: 100%;resize: none;"></textarea></div>
+</div>
+
+<div id="calendar">
+    <div style="height:22px;background-color:#eee"></div>
+</div>
+
+
+<script type="text/javascript">
+    $(function() {
+
+        // page is now ready, initialize the calendar...
+
+        $('#calendar').fullCalendar({
+            header:{//prev/next 包含月/周/日
+                right: 'prev,next today,listWeek', //右边  前/后/当天
+                center: 'prevYear title nextYear',//中间 前年/主题/明年
+                left: 'month,agendaWeek,agendaDay'//左边 月/周/年
+            },
+            footer:false,//默认是不显示参数和头一样
+            views:{//格式化
+                month:{
+                    titleFormat: 'MMMM YYYY'
+                }
+            },
+            monthNames:['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+            monthNamesShort:['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+            dayNames:['日', '一', '二', '三', '四', '五', '六'],
+            dayNamesShort:['日', '一', '二', '三', '四', '五', '六'],
+            buttonText:{//自定义按钮
+                today:'今天',
+                month:'月',
+                agendaWeek:'周',
+                agendaDay:'日'
+            },
+            allDaySlot:true,//显示全天
+            allDayText:'全天',//全天
+            unselectAuto: true,//点击拖拽之后点击日历空白区域是否取消选中状态true为取消 false为不取消
+            theme:true,
+            selectable: true,//显示事件范围的提示
+            weekends: true, //影藏显示周末 false:不显示 true:显示  默认是显示周末
+            navLinks: true, // can click day/week names to navigate views
+            editable: true,//Event是否可以被拖动或者拖拽
+            eventLimit: true, // allow "more" link when too many events
+            events: function(start,end,callback){//加载日程事件
+                var events=[];
+                console.log($.fullCalendar.formatDate(start, "yyyy-MM-dd"));
+                events.push({
+                    title:"测试事件",
+                    start:'2019-02-15 12:00:00',
+                    end:'2019-02-15 13:00:00'
+                });
+                callback(events);
+            },
+            dayClick:function(date, allDay, jsEvent, view){
+                console.log(jsEvent.clientX,jsEvent.clientY);//点击时候鼠标的位置
+                console.log(jsEvent.offsetX,jsEvent.offsetY);//鼠标在某一天的框内的位置
+                var X = jsEvent.clientX-jsEvent.offsetX;
+                var Y = jsEvent.clientY-jsEvent.offsetY + $(document).scrollTop();
+                var height = jsEvent.originalEvent.srcElement.clientHeight;
+                var width = jsEvent.originalEvent.srcElement.clientWidth
+                $("#addBox").css({'display':'','left':X+'px','top':Y+'px','height':height,'width':width});
+            }
+        })
+    });
+
+</script>
+<!-- 应用基金 -->
+
+
+<!-- 选择人员树 -->
+
+
+
+
+
+
+
+
+</body>
+</html>
+
