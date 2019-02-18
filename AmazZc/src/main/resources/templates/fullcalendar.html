@@ -1,15 +1,4 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
-
-<!DOCTYPE html>
 <%@page pageEncoding="UTF-8"%>
 <% String contextPath = request.getContextPath(); %>
 <%@ page import="java.util.Date" %>
@@ -80,7 +69,7 @@
     <!-- 添加SQL编辑代码高亮样式 -->
     <link rel="stylesheet" href="<%=contextPath %>/report/index/css/codemirror.css">
     <link rel="stylesheet" href="<%=contextPath %>/report/index/css/dracula.css">
-
+    <link href="<%=contextPath %>/css/animatecss/animate.min.css" rel="stylesheet" type="text/css">
     <!-- SQL代码高亮JS -->
     <script type="application/javascript" src="<%=contextPath %>/report/index/js/codemirror.js"></script>
     <script type="application/javascript" src="<%=contextPath %>/report/index/js/sql.js"></script>
@@ -95,9 +84,52 @@
         .addbox{
             position: absolute;
             background-color: #0072c6;
-            z-index: 9;
+            z-index: 10;
             left: 1356px;
             top: 521px;
+        }
+
+        .editBox{
+            position: absolute;
+            background-color: #0072c6;
+            z-index: 10;
+            left: 1356px;
+            top: 521px;
+        }
+
+        #div1{
+            border-style: solid;
+            border-width: 10px 5px 5px 5px;
+            border-color: #FFE4C4 transparent transparent transparent;
+            width: 0px;
+            height: 0px;
+            display:inline-block;
+        }
+
+        #moveAlert{
+            position: absolute;
+            z-index: -1;
+            text-align: center;
+            text-align: center;
+        }
+
+        #moveAlertContent{
+            width: 274px;
+            height: 58px;
+            border: 1px solid bisque;
+            background-color: bisque;
+            border-radius: 5px;
+        }
+
+        #operateEventModel selected{
+            background-color:#eee !important;
+        }
+
+        .overflowClass{
+            white-space:nowrap;
+            text-overflow:ellipsis;
+            -o-text-overflow:ellipsis;
+            overflow: hidden;
         }
     </style>
 </head>
@@ -106,10 +138,103 @@
 <%@include file="/tools/jsp/components/tipBox.jsp" %>
 
 <!-- 重新布局确认框 -->
-<div id="addBox" class="addbox" style="display:none">
-    <div style="height: 8%;"><i class="fa fa-times" aria-hidden="true" style="float: right;padding: 2%;color: #fff;"></i></div>
-    <div style="padding: 2%;height: 92%;"><textarea style="width: 100%;height: 100%;resize: none;"></textarea></div>
+
+<input type="hidden" id="operateEventId"></input>
+<div id="operateEventModel" style="overflow-y: hidden; z-index: 1041;" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="border-bottom: 1px solid #e5e5e5">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="eventModel">记事本</h4>
+            </div>
+            <div class="modal-body" style="padding: 0px;">
+                <div style="border-bottom: 1px solid #eee;padding: 5px;" id="buttonGroupDiv">
+                    <button type="button" class="btn btn-default select" onclick="checkType(this)"  value="process">流程</button>
+                    <button type="button" class="btn btn-default" onclick="checkType(this)" value="note">记录</button>
+                </div>
+
+                <div style="padding: 5px;display:none">
+
+                    <div>
+                        <label>报告名称</label>
+                        <input type="text" />
+                    </div>
+
+                    <div>
+                        <label>基金类型</label>
+                        <input type="text" />
+                    </div>
+
+                    <div>
+                        <label>开始时间</label>
+                        <input type="text" />
+                    </div>
+
+                    <div>
+                        <label>结束时间</label>
+                        <input type="text" />
+                    </div>
+
+
+                    <div>
+                        <input type="radio" name="startType"/>立即发起
+                        <input type="radio" name="startType"/>指定时间
+                        <input type="radio" name="startType"/>循环发起
+                    </div>
+
+                    <div>
+                        <label>发起时间:</label>
+                        <input type="text" />
+                    </div>
+                </div>
+
+                <div style="padding: 5px;">
+
+                    <div>
+                        <label>标题:</label>
+                        <input type="text" id="noteTitle" name="noteTitle"/>
+                        <input type="radio" name="degree" value="red" /> 重要
+                        <input type="radio" name="degree" value="yellow" /> 一般
+                        <input type="radio" name="degree" value="blue"/> 提醒
+                    </div>
+
+                    <div>
+                        <label>开始时间:</label>
+                        <input class="laydate-icon" type="text" id="noteStartTime" onClick="laydate({format:'YYYY-MM-DD',elem:'#noteStartTime',max:laydate.now(0)})"/>
+                        <input type="time"/>
+                    </div>
+
+                    <div>
+                        <label>结束时间:</label>
+                        <input class="laydate-icon" type="text" id="noteEndTime" onClick="laydate({format:'YYYY-MM-DD hh:MM:ss',elem:'#noteEndTime',max:laydate.now(0)})"/>
+                        <input type="time"/>
+                    </div>
+
+                    <div>
+                        <label>内容:</label>
+                        <textarea id="noteTextCont"></textarea>
+                    </div>
+
+                    <div></div>
+                </div>
+            </div>
+            <div class="modal-footer" style="border-top: 1px solid #e5e5e5; margin: 0;text-align: center;">
+                <button type="button" class="btn btn-default" onclick="operateEvent()">确认</button>
+                <button type="button" class="btn btn-default close-win" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
 </div>
+
+<div id="moveAlert" style="display:none">
+    <div id="moveAlertContent" style="text-align:left">
+        <!-- <div style="border-bottom: 1px solid #EEE;">时间 :2019-02-18 - 2019-02-18</div>
+        <div>标题:测试功能内容</div>
+        <div class="overflowClass">内容:</div> -->
+    </div>
+    <div id="div1"></div>
+</div>
+
 
 <div id="calendar">
     <div style="height:22px;background-color:#eee"></div>
@@ -117,6 +242,9 @@
 
 
 <script type="text/javascript">
+
+    var events = [{title:"测试事件",start:'2019-02-18T10:30:00',end:'2019-02-18T12:30:00',obj:{'name':'12340','age':'18'},type:'note',noteTextCont:'测试事件啊'}];
+
     $(function() {
 
         // page is now ready, initialize the calendar...
@@ -153,33 +281,108 @@
             editable: true,//Event是否可以被拖动或者拖拽
             eventLimit: true, // allow "more" link when too many events
             events: function(start,end,callback){//加载日程事件
-                var events=[];
-                console.log($.fullCalendar.formatDate(start, "yyyy-MM-dd"));
-                events.push({
-                    title:"测试事件",
-                    start:'2019-02-15 12:00:00',
-                    end:'2019-02-15 13:00:00'
-                });
                 callback(events);
             },
+            //天数点击触发新增时间
             dayClick:function(date, allDay, jsEvent, view){
-                console.log(jsEvent.clientX,jsEvent.clientY);//点击时候鼠标的位置
-                console.log(jsEvent.offsetX,jsEvent.offsetY);//鼠标在某一天的框内的位置
-                var X = jsEvent.clientX-jsEvent.offsetX;
-                var Y = jsEvent.clientY-jsEvent.offsetY + $(document).scrollTop();
-                var height = jsEvent.originalEvent.srcElement.clientHeight;
-                var width = jsEvent.originalEvent.srcElement.clientWidth
-                $("#addBox").css({'display':'','left':X+'px','top':Y+'px','height':height,'width':width});
+                $("#operateEventModel").modal({show: true, backdrop: "static"});
+                $("#operateEventId").val('');
+            },
+            //事件点击触发编辑和删除
+            eventClick:function(event, jsEvent, view){
+
+            },
+            //鼠标滑过显示详情
+            eventMouseover:function(event, jsEvent, view){
+                var X = jsEvent.clientX-jsEvent.offsetX-6;
+                var Y = jsEvent.clientY-jsEvent.offsetY + $(document).scrollTop()-3-58;
+                $("#moveAlert").removeClass("fadeOut").addClass("animated fadeIn");
+                $("#moveAlert").css({'display':'','left':X+'px','top':Y+'px','z-index':'9'});
+                $("#moveAlertContent").empty();
+                var html = "";
+                if(event.type=="note"){
+                    html +='<div style="border-bottom: 1px solid #EEE;">'+ $.fullCalendar.formatDate(event.start, "yyyy-MM-dd hh:MM:ss") + '-' + $.fullCalendar.formatDate(event.end, "yyyy-MM-dd hh:MM:ss") +'</div>' + '<div>标题:'+ event.title +'</div><div class="overflowClass">内容:'+ event.noteTextCont +'</div>';
+                }
+                $("#moveAlertContent").append(html);
+                console.log(event);
+            },
+            //鼠标离开显示详情
+            eventMouseout:function(event, jsEvent, view){
+                $("#moveAlert").css({'z-index':'-1'});
+                $("#moveAlert").removeClass("fadeIn").addClass("animated fadeOut");
             }
         })
     });
+
+    function addEvent(){
+        $("#countersignRemainingTimeModel [data-dismiss='modal']").click();
+    }
+
+    /*------------------------- 样式变化 -----------------------------*/
+    //选择记事本类型
+    function checkType(obj){
+        $(obj).siblings('button').removeClass('select');
+        $(obj).addClass('select');
+    }
+
+    /*------------------------ 确定按钮 ------------------------------*/
+    //确定操作
+
+    function operateEvent(){
+        //获取事件id
+        var eventId = $("#operateEventId").val();
+        //事件类型
+        var type = null;
+        $("#buttonGroupDiv button").each(function(){
+            if($(this).hasClass('select')){
+                type = $(this).attr("value");
+            }
+        })
+        console.log(type);
+        if(isNotNull(eventId)){
+            //修改一系列操作
+        }else{
+            //新增一系列操作
+            if(type=="note"){
+                var event = {};
+                //标题
+                event.title = $("#noteTitle").val();
+                //color
+                event.backgroundColor = $("input[name='degree']:checked").val();
+                //开始时间
+                event.start =  $("#noteStartTime").val();
+                //结束时间
+                event.end = $("noteEndTime").val();
+                //类型
+                event.type = type;
+                //内容
+                event.noteTextCont = $("#noteTextCont").val()
+                events.push(event);
+                $("#calendar").fullCalendar('refetchEvents');
+                $("#operateEventModel [data-dismiss='modal']").click();
+            }else{
+
+            }
+
+        }
+    }
+
+    //判断非空
+    function isNotNull(str){
+        if(str!=null && str!="" && str!="undefined"){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    //颜色转换
 
 </script>
 <!-- 应用基金 -->
 
 
 <!-- 选择人员树 -->
-
 
 
 
